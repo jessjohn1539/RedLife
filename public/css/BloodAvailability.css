@@ -1,0 +1,270 @@
+
+.page-header{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    outline: 0;
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+.contain{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: 0;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+}
+.panel{
+    display: block;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    border-color: #ebccd1;
+}
+.panel-heading{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0;
+    border: none;
+    outline: 0;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-color: #ebccd1;
+    background-image: none;
+    background-color: #bf2229;
+    color: white;
+}
+.panel-body{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0;
+    border: none;
+    outline: 0;
+    padding: 15px;
+}
+.row{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 1em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: 0;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.alert{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0;
+    outline: 0;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding-right: 35px;
+}
+.legend{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: none;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.legendtext{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: none;
+    outline: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    float: left;
+    margin-right: 10px;
+    font-size: small;
+}
+#example-table{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    background-color: transparent;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+.bgtablered{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    border-spacing: 0;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: 0;
+    background: #bf2229;
+}
+.govt{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    color: #292929;
+    font-weight: 400;
+    list-style: none;
+    font-size: small;
+    box-sizing: border-box;
+    padding: 0;
+    outline: 0;
+    border: 1px solid #ccc;
+    float: left;
+    width: 15px;
+    height: 20px;
+    margin: 2px;
+    background-color: #F0AAAD;
+}
+.others{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    color: #292929;
+    font-weight: 400;
+    list-style: none;
+    font-size: small;
+    box-sizing: border-box;
+    padding: 0;
+    outline: 0;
+    border: 1px solid #ccc;
+    float: left;
+    width: 15px;
+    height: 20px;
+    margin: 2px;
+    background-color: #ffffff;
+}
+.close{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-family: 'Droid Sans',sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: 0;
+    background-color: transparent;
+    text-decoration: none;
+    cursor: pointer;
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .2;
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
+}
+.alert-dismissable{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    line-height: 2em;
+    font-family: 'Droid Sans',sans-serif;
+    font-size: 16px;
+    color: #292929;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0;
+    outline: 0;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding-right: 35px;
+}
