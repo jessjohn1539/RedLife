@@ -28,9 +28,10 @@
   padding: 15px 14px;
   border-radius: 12px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
 }
 .overview-boxes .box:hover{
-  transform: scale(1.11);
+  transform: scale(1.08);
   box-shadow: -7px 4px 28px -3px #171010;
 }
 .overview-boxes .box-topic{
