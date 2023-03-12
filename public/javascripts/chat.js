@@ -1,3 +1,9 @@
+// Press enter to send a message
+$("#textInput").keypress(function (e) {
+    if (e.which == 13) {
+        getResponse();
+    }
+});
 // Collapsible
 var coll = document.getElementsByClassName("collapsible");
 
@@ -97,9 +103,3 @@ function heartButton() {
     buttonSendText("Heart clicked!")
 }
 
-// Press enter to send a message
-$("#textInput").keypress(function (e) {
-    if (e.which == 13) {
-        getResponse();
-    }
-});

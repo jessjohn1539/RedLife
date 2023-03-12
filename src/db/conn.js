@@ -1,14 +1,14 @@
-const mongoose = require("mongoose");
-mongoose.set('strictQuery', true);
-
-mongoose.connect("mongodb://localhost:27017/Redlife", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    family: 4,
-}).then(()=>{
-    console.log('Database connection successful');
-}).catch((error)=>{
-    console.log(error);
-    // console.log('no connection');
-    // console.error(err.stack); //a function to print exactly where the error was caught
-})
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '@Ys2drrizfs',
+    database: 'redlife'
+  });
+  connection.connect(function(err) {
+    if (err) {
+      console.error('Error connecting to SQL database: ' + err.stack);
+      return;
+    }
+    console.log('Connected to SQL database as ID ' + connection.threadId);
+  });

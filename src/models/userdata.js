@@ -35,15 +35,18 @@ const DonorSchema = mongoose.Schema({
         required: true
     },
     donorPass:{
-        type: String,
-        
+        type: String,    
         minLength: 10
     },
     confirmPas:{
         type: String,
-        
         minLength: 10
+    },
+    date:{
+        type:Date,
+        default:Date.now
     }
+
 })
 const Donor = mongoose.model("Donor", DonorSchema );
 
