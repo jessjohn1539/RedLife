@@ -83,7 +83,7 @@
     function searchBloodBanks() {
       var state = document.getElementById("state").value;
       var district = document.getElementById("district").value;
-      var geocodeUrl = "https://us1.locationiq.com/v1/search.php?key=pk.dd52f14b91be049f9ece027f238ec71c&q=" + district + "," + state + "&format=json";
+      var geocodeUrl = "https://us1.locationiq.com/v1/search.php?key=&q=" + district + "," + state + "&format=json";
 
       $.getJSON(geocodeUrl, function (data) {
         if (data.length > 0) {
@@ -132,7 +132,7 @@
         const district = document.getElementById("district").value;
 
         // Use the LocationIQ API to get the latitude and longitude of the location
-        const geocodingApiUrl = `https://us1.locationiq.com/v1/search.php?key=pk.dd52f14b91be049f9ece027f238ec71c&q=${district},${state}&format=json`;
+        const geocodingApiUrl = `https://us1.locationiq.com/v1/search.php?key=&q=${district},${state}&format=json`;
         fetch(geocodingApiUrl)
           .then(response => response.json())
           .then(data => {
@@ -174,7 +174,7 @@
 
   <!-- Load the Google Maps JavaScript API -->
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBif8bQZ7ylMFUJ_QnHSpwDb9uhtCH34V4&callback=initMap"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
   {{!-- javascript files linked --}}
   <script src="javascripts/chat.js"></script>
   <script src="javascripts/responses.js"></script>
