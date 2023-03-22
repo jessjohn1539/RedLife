@@ -1,22 +1,16 @@
 //Requiring all modules
 const express = require("express");
 const path = require("path");
-// require("./db/conn");
 const mysql = require('mysql');
 const app = express();
 const hbs = require("hbs");
 const cors = require("cors");
+const bodyParser = require('body-parser');
 
 
 //port settings
 const port = process.env.PORT || 3000;
 
-//to display htmls in public folders
-// const static_path = path.join(__dirname, "../public")
-// app.use(express.static(static_path));
-
-//if the below hbs path settings are getting out of hand
-//then activate the above 2 3 lines
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -36,6 +30,7 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions)) // Use this after the variable declaration
+app.use(bodyParser.json());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(static_path));
@@ -54,11 +49,50 @@ app.get("/donorReg", (req, res) => {
 app.get("/bloodbankReg", (req, res) => {
     res.render("AddBloodBank")
 });
+app.get('/inventory', (req, res) => {
+    const sql = 'SELECT * FROM inventory';
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        res.render('inventory', { inventory: results });
+    });
+});
+app.post('/add-inventory', (req, res) => {
+    const { bloodType, quantity, expirationDate } = req.body;
+    const sqlLastUsername = 'SELECT userName FROM BBpass ORDER BY userName DESC LIMIT 1';
+    connection.query(sqlLastUsername, (err, results) => {
+        if (err) throw err;
+        const bloodBankUsername = results[0].userName;
+        const sqlInsertInventory = 'INSERT INTO inventory (bloodType, quantity, expirationDate, bloodBankId) SELECT ?, ?, ?, userName FROM blood_bank_info WHERE username = ?';
+        connection.query(sqlInsertInventory, [bloodType, quantity, expirationDate, bloodBankUsername], (err, results) => {
+            if (err) throw err;
+            res.redirect('/inventory');
+        });
+    });
+});
+
 app.get("/bloodAvailability", (req, res) => {
-    res.render("BloodAvailability")
+    // res.render("BloodAvailability")
+    const sql = `SELECT stateCode, hospCity, BBName, hospType, hospContact, hospAdd1, pincode FROM blood_bank_info`;
+    connection.query(sql, (err, result) => {
+        if (err) throw err;
+        const dataList = result.map((row) => ({
+            stateCode: row.stateCode,
+            hospCity: row.hospCity,
+            BBName: row.BBName,
+            hospType: row.hospType,
+            hospContact: row.hospContact,
+            hospAdd1: row.hospAdd1,
+            pincode: row.pincode,
+        }));
+
+        res.render('BloodAvailability', { dataList });
+    });
 });
 app.get("/donorLogin", (req, res) => {
     res.render("donorLogin")
+});
+app.get("/BBlogin", (req, res) => {
+    res.render("BBlogin")
 });
 
 
@@ -87,6 +121,7 @@ app.post('/DonorRegistration', function (req, res) {
     connection.query(sql, values, function (err, result) {
         if (err) throw err;
         console.log('1 record inserted');
+        alert('donor successfully registered');
         res.redirect('/');
         console.log(result);
     });
@@ -103,26 +138,109 @@ app.post('/login', (req, res) => {
     });
     const query1 = `SELECT * FROM donor WHERE donorPass = ?`;
     connection.query(query1, [password], (error, results, fields) => {
-      if (error) throw error;
-      
-      if (results.length > 0) {
-        const donor = results[0];
-        if (donor.donorPass === password && donor.donorMobile === mobileNumber) {
-          // Password is correct, user can login
-          res.redirect(`/?username=${donor.donorFname}`);
-        // res.redirect('/?donorFname=' + donor.donorFname);
-        // res.render('index', {username: donor.donorFname});
+        if (error) throw error;
+
+        if (results.length > 0) {
+            const donor = results[0];
+            if (donor.donorPass === password && donor.donorMobile === mobileNumber) {
+                // Password is correct, user can login
+                res.redirect(`/?username=${donor.donorFname}`);
+                // res.redirect('/?donorFname=' + donor.donorFname);
+                // res.render('index', {username: donor.donorFname});
+            } else {
+                // Password is incorrect
+                res.status(401).send('Incorrect password');
+            }
         } else {
-          // Password is incorrect
-          res.status(401).send('Incorrect password');
+            // User not found
+            res.status(404).send('User not found');
         }
-      } else {
-        // User not found
-        res.status(404).send('User not found');
-      }
     });
-  });
-  
+});
+
+app.post('/bloodbankRegis', function (req, res) {
+    const stateCode = req.body.stateCode;
+    const districtcode = req.body.districtcode;
+    const hospCity = req.body.hospCity;
+    const BBName = req.body.BBName;
+    const parentHospName = req.body.parentHospName;
+    const hospShortName = req.body.hospShortName;
+    const hospType = req.body.hospType;
+    const contactPerson = req.body.contactPerson;
+    const hospEmail = req.body.hospEmail;
+    const hospContact = req.body.hospContact;
+    const hospFax = req.body.hospFax;
+    const licenceNo = req.body.licenceNo;
+    const licenceFromDate = req.body.licenceFromDate;
+    const licenceToDate = req.body.licenceToDate;
+    const componentFacility = req.body.componentFacility;
+    const apheresisFacility = req.body.apheresisFacility;
+    const helplineNo = req.body.helplineNo;
+    const hospAdd1 = req.body.hospAdd1;
+    const hospAdd2 = req.body.hospAdd2;
+    const pincode = req.body.pincode;
+    const hospWebsite = req.body.hospWebsite;
+    const noOfBed = req.body.noOfBed;
+    const userName = req.body.userName;
+    const password = req.body.password;
+
+
+    const donorType = req.body.donorType;
+    const donationType = req.body.donationType;
+    const componentType = req.body.componentType;
+    const bagType = req.body.bagType;
+    const ttiType = req.body.ttiType;
+
+
+
+    const sql1 = 'INSERT INTO blood_bank_info (stateCode, districtcode, hospCity,BBName,parentHospName,hospShortName, hospType,contactPerson, hospEmail,hospContact,hospFax,licenceNo,licenceFromDate,licenceToDate,componentFacility,apheresisFacility,helplineNo,hospAdd1,hospAdd2,pincode,hospWebsite,noOfBed,userName, password) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+    const values1 = [stateCode, districtcode, hospCity, BBName, parentHospName, hospShortName, hospType, contactPerson, hospEmail, hospContact, hospFax, licenceNo, licenceFromDate, licenceToDate, componentFacility, apheresisFacility, helplineNo, hospAdd1, hospAdd2, pincode, hospWebsite, noOfBed, userName, password];
+
+
+    connection.query(sql1, values1, (err, result) => {
+        if (err) throw err;
+
+        // Insert data into table2
+        const sql2 = 'INSERT INTO donation_info (donorType, donationType,componentType,bagType,ttiType) VALUES (?,?,?,?,?)';
+        const values2 = [donorType, donationType, componentType, bagType, ttiType]
+
+        connection.query(sql2, values2, (err, result) => {
+            if (err) throw err;
+
+            console.log('Data inserted successfully!');
+            res.redirect('/');
+        });
+    });
+});
+
+app.post('/BloodBanklogin', (req, res) => {
+    const userName = req.body.userName;
+    const password = req.body.password;
+    const sql = 'INSERT INTO BBPass (userName, password) VALUES (?,?)';
+    const values = [userName, password];
+
+    connection.query(sql, values, function (err, result) {
+        if (err) throw err;
+        console.log('1 record inserted');
+    });
+    const query1 = `SELECT * FROM blood_bank_info WHERE password = ?`;
+    connection.query(query1, [password], (error, results, fields) => {
+        if (error) throw error;
+
+        if (results.length > 0) {
+            const bloodbank = results[0];
+            if (bloodbank.password === password && bloodbank.userName === userName) {
+                res.redirect('/inventory');
+            } else {
+                // Password is incorrect
+                res.status(401).send('Incorrect password');
+            }
+        } else {
+            // User not found
+            res.status(404).send('Blood bank not found');
+        }
+    });
+});
 //localhost port specifications 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)

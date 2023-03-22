@@ -1,0 +1,146 @@
+/* body {
+    background-color: #fff;
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  h1, h2 {
+    color: #f96d6d;
+  }
+  
+  table {
+    border-collapse: collapse;
+    margin: 20px 0;
+    width: 100%;
+  }
+  
+  thead th {
+    background-color: #f96d6d;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  tbody td {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  form input[type="number"],
+  form input[type="date"],
+  form select {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  form button[type="submit"] {
+    background-color: #f96d6d;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  form button[type="submit"]:hover {
+    background-color: #e54e4e;
+  }
+   */
+   body {
+    background-color: #f2d3d3;
+    color: #6c2323;
+    font-family: Arial, sans-serif;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 3em;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px #6c2323;
+  }
+
+  h2 {
+    text-align: center;
+      font-size: 2em;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px #6c2323;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #6c2323;
+  }
+
+  th {
+    background-color: #ffbdbd;
+  }
+
+  tr:nth-child(even) {
+    background-color: #ffe8e8;
+  }
+
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  select,
+  input[type="number"],
+  input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #6c2323;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 1em;
+    box-sizing: border-box;
+  }
+
+  button[type="submit"] {
+    background-color: #ffbdbd;
+    color: #6c2323;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #d9a9a9;
+  }
+
+  @media screen and (max-width: 600px) {
+    th,
+    td {
+      font-size: 0.8em;
+    }
+  }

@@ -49,11 +49,22 @@
     <div class="row">
       <div class="col-md-12" align="center">
 
-        <button type="search" id="searchButton" class="btn btn-danger" onclick="searchBloodBanks()" >Search</button>
+        <button type="search" id="searchButton" class="btn btn-danger" onclick="searchBloodBanks()">Search</button>
       </div>
     </div>
   </div>
-
+  <h2>Registered Blood Banks</h2>
+  <ul>
+    {{#each dataList}}
+    <li><strong>Name:</strong> {{BBName}}</li>
+    <li><strong>Contact:</strong> {{hospContact}}</li>
+    <li><strong>Address:</strong> {{hospAdd1}}</li>
+    <li><strong>City:</strong> {{hospCity}}</li>
+    <li><strong>State:</strong> {{stateCode}}</li>
+    <li><strong>pincode:</strong> {{pincode}}</li>
+    <br>
+    {{/each}}
+  </ul>
   <div class="push"></div>
   </div>
   <br>
@@ -66,103 +77,104 @@
   <br><br><br>
   {{>footer}}
   {{>chat}}
- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
   <script>
-     function searchBloodBanks() {
-        var state = document.getElementById("state").value;
-        var district = document.getElementById("district").value;
-        var geocodeUrl = "https://us1.locationiq.com/v1/search.php?key=pk.dd52f14b91be049f9ece027f238ec71c&q=" + district + "," + state + "&format=json";
-        
-        $.getJSON(geocodeUrl, function(data) {
-          if (data.length > 0) {
-            var lat = data[0].lat;
-            var lon = data[0].lon;
-            var location = new google.maps.LatLng(lat, lon);
-            var mapOptions = {
-              center: location,
-              zoom: 16
+    function searchBloodBanks() {
+      var state = document.getElementById("state").value;
+      var district = document.getElementById("district").value;
+      var geocodeUrl = "https://us1.locationiq.com/v1/search.php?key=pk.dd52f14b91be049f9ece027f238ec71c&q=" + district + "," + state + "&format=json";
+
+      $.getJSON(geocodeUrl, function (data) {
+        if (data.length > 0) {
+          var lat = data[0].lat;
+          var lon = data[0].lon;
+          var location = new google.maps.LatLng(lat, lon);
+          var mapOptions = {
+            center: location,
+            zoom: 16
+          };
+          var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+          var bloodBanksUrl = "http://localhost:3000/api/bloodbanks?lat=" + lat + "&lon=" + lon;
+
+          $.getJSON(bloodBanksUrl, function (data) {
+            if (data.length > 0) {
+              for (var i = 0; i < data.length; i++) {
+                var location = new google.maps.LatLng(data[i].lat, data[i].lon);
+                var marker = new google.maps.Marker({
+                  position: location,
+                  map: map,
+                  title: data[i].name
+                });
+              }
+            } else {
+              alert("No blood banks found near your location.");
+            }
+          });
+        } else {
+          alert("Invalid state and district combination. Please try again.");
+        }
+      });
+    }
+    function initMap() {
+      // Initialize the map
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 19.0798, lng: 72.8973 },
+        zoom: 16,
+      });
+
+      // Add a listener for the form submission
+      document.getElementById("locationForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        // Get the state and district values from the form
+        const state = document.getElementById("state").value;
+        const district = document.getElementById("district").value;
+
+        // Use the LocationIQ API to get the latitude and longitude of the location
+        const geocodingApiUrl = `https://us1.locationiq.com/v1/search.php?key=pk.dd52f14b91be049f9ece027f238ec71c&q=${district},${state}&format=json`;
+        fetch(geocodingApiUrl)
+          .then(response => response.json())
+          .then(data => {
+            // Get the latitude and longitude from the API response
+            const lat = parseFloat(data[0].lat);
+            const lng = parseFloat(data[0].lon);
+
+            // Update the map to center on the location
+            const location = { lat: lat, lng: lng };
+            map.setCenter(location);
+
+            // Use the Google Maps Places API to search for nearby blood banks
+            const request = {
+              location: location,
+              radius: '5000',
+              query: 'hospital'
             };
-            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-            var bloodBanksUrl = "http://localhost:3000/api/bloodbanks?lat=" + lat + "&lon=" + lon;
-            
-            $.getJSON(bloodBanksUrl, function(data) {
-              if (data.length > 0) {
-                for (var i = 0; i < data.length; i++) {
-                  var location = new google.maps.LatLng(data[i].lat, data[i].lon);
-                  var marker = new google.maps.Marker({
-                    position: location,
+
+            const service = new google.maps.places.PlacesService(map);
+            service.textSearch(request, (results, status) => {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                // Loop through the results and create a marker for each blood bank
+                for (let i = 0; i < results.length; i++) {
+                  const place = results[i];
+                  const marker = new google.maps.Marker({
+                    position: place.geometry.location,
                     map: map,
-                    title: data[i].name
+                    title: place.name
                   });
                 }
-              } else {
-                alert("No blood banks found near your location.");
               }
             });
-          } else {
-            alert("Invalid state and district combination. Please try again.");
-          }
-        });
-      }
-    function initMap() {
-        // Initialize the map
-        const map = new google.maps.Map(document.getElementById("map"), {
-            center: {lat: 19.0798, lng: 72.8973},
-            zoom: 16,
-        });
-
-        // Add a listener for the form submission
-        document.getElementById("locationForm").addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            // Get the state and district values from the form
-            const state = document.getElementById("state").value;
-            const district = document.getElementById("district").value;
-
-            // Use the LocationIQ API to get the latitude and longitude of the location
-            const geocodingApiUrl = `https://us1.locationiq.com/v1/search.php?key=pk.dd52f14b91be049f9ece027f238ec71c&q=${district},${state}&format=json`;
-            fetch(geocodingApiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    // Get the latitude and longitude from the API response
-                    const lat = parseFloat(data[0].lat);
-                    const lng = parseFloat(data[0].lon);
-
-                    // Update the map to center on the location
-                    const location = {lat: lat, lng: lng};
-                    map.setCenter(location);
-
-                    // Use the Google Maps Places API to search for nearby blood banks
-                    const request = {
-                        location: location,
-                        radius: '5000',
-                        query: 'hospital'
-                    };
-
-                    const service = new google.maps.places.PlacesService(map);
-                    service.textSearch(request, (results, status) => {
-                        if (status === google.maps.places.PlacesServiceStatus.OK) {
-                            // Loop through the results and create a marker for each blood bank
-                            for (let i = 0; i < results.length; i++) {
-                                const place = results[i];
-                                const marker = new google.maps.Marker({
-                                    position: place.geometry.location,
-                                    map: map,
-                                    title: place.name
-                                });
-                            }
-                        }
-                    });
-                })
-                .catch(error => console.error(error));
-        });
+          })
+          .catch(error => console.error(error));
+      });
     }
-    
-</script>
 
-<!-- Load the Google Maps JavaScript API -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBif8bQZ7ylMFUJ_QnHSpwDb9uhtCH34V4&callback=initMap"></script>
+  </script>
+
+  <!-- Load the Google Maps JavaScript API -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBif8bQZ7ylMFUJ_QnHSpwDb9uhtCH34V4&callback=initMap"></script>
   {{!-- javascript files linked --}}
   <script src="javascripts/chat.js"></script>
   <script src="javascripts/responses.js"></script>

@@ -53,9 +53,9 @@
 <!--Main Container-->
 
 <body onload="funcOnload()">
-    <form name="NearbyBBFB" method="post" action="/BLDAHIMS/bloodbank/bbOnboard.cnt">
         <!-- Navigation Bar  -->
         {{>navbar}}
+    <form action="/bloodbankRegis" method="POST" role="form" enctype="application/x-www-form-urlencoded">
         <!--Info Container-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <div class="preloader" style="display: none;"></div>
@@ -92,48 +92,9 @@
                                             <font color="red">*</font>
                                         </div>
                                         <div class="col-sm-3">
-                                            <select name="stateCode" onchange="loadDistrictList(this.value)"
-                                                class="form-control" id="stateCode">
-                                                <option value="-1">Select State</option>
-
-                                                <option value="35">Andaman &amp; Nicobar Islands</option>
-                                                <option value="28">Andhra Pradesh</option>
-                                                <option value="12">Arunachal Pradesh</option>
-                                                <option value="18">Assam</option>
-                                                <option value="10">Bihar</option>
-                                                <option value="94">Chandigarh</option>
-                                                <option value="22">Chhattisgarh</option>
-                                                <option value="26">Dadra &amp; Nagar Haveli</option>
-                                                <option value="25">Daman &amp; Diu</option>
-                                                <option value="97">Delhi</option>
-                                                <option value="30">Goa</option>
-                                                <option value="24">Gujarat</option>
-                                                <option value="96">Haryana</option>
-                                                <option value="92">Himachal Pradesh</option>
-                                                <option value="91">Jammu and Kashmir</option>
-                                                <option value="20">Jharkhand</option>
-                                                <option value="29">Karnataka</option>
-                                                <option value="32">Kerala</option>
-                                                <option value="37">Ladakh</option>
-                                                <option value="31">Lakshadweep</option>
-                                                <option value="23">Madhya Pradesh</option>
-                                                <option value="27">Maharashtra</option>
-                                                <option value="14">Manipur</option>
-                                                <option value="17">Meghalaya</option>
-                                                <option value="15">Mizoram</option>
-                                                <option value="13">Nagaland</option>
-                                                <option value="21">Odisha</option>
-                                                <option value="34">Puducherry</option>
-                                                <option value="93">Punjab</option>
-                                                <option value="98">Rajasthan</option>
-                                                <option value="11">Sikkim</option>
-                                                <option value="33">Tamil Nadu</option>
-                                                <option value="36">Telangana</option>
-                                                <option value="16">Tripura</option>
-                                                <option value="95">Uttarakhand</option>
-                                                <option value="99">Uttar Pradesh</option>
-                                                <option value="19">West Bengal</option>
-                                            </select>
+                                            <input type="text" name="stateCode" maxlength="60" tabindex="1" value=""
+                                                onkeypress="return validateAlphaNumeric(event)" class="form-control"
+                                                id="txtBbLName" required>
                                         </div>
 
                                         <div class="col-sm-1">
@@ -141,10 +102,9 @@
                                             <font color="red">*</font>
                                         </div>
                                         <div class="col-sm-3">
-                                            <select name="districtList" id="distList" class="form-control"
-                                                onchange=" setSelectedDistrict(this)">
-                                                <option value="-1">Select District</option>
-                                            </select>
+                                            <input type="text" name="districtcode" maxlength="60" tabindex="1" value=""
+                                                onkeypress="return validateAlphaNumeric(event)" class="form-control"
+                                                id="txtBbLName" required>
 
                                         </div>
 
@@ -170,7 +130,7 @@
                                             <font color="red">*</font>
                                         </div>
                                         <div class="col-sm-3">
-                                            <input type="text" name="bldbankName" maxlength="100" tabindex="1" value=""
+                                            <input type="text" name="BBName" maxlength="100" tabindex="1" value=""
                                                 onkeypress="return validateAlphaOnlyWithDotAndSpace(event,this)"
                                                 class="form-control">
 
@@ -388,6 +348,30 @@
                                                         class="form-control">
                                                 </div>
                                             </div><br>
+                                            
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>Create a username and a password</legend>
+                                            <div class="row">
+                                                <div class="col-sm-4" style="padding-top: 15px;">
+                                                    <b>Username</b>
+                                                </div>
+                                                <div class="col-sm-8" style="padding-top: 15px;">
+                                                    <input type="text" name="userName" tabindex="1" value=""
+                                                        class="form-control" required>
+                                                </div>
+                                            </div><br>
+
+                                            <div class="row">
+                                                <div class="col-sm-4" style="padding-top: 15px;">
+                                                    <b>Password</b>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text" name="password" tabindex="1" value=""
+                                                        class="form-control" required>
+                                                </div>
+                                            </div><br>
+                                            
                                         </fieldset>
                                     </div>
                                 </div>
@@ -402,7 +386,7 @@
                                             <button type="button" id="submitButton" class="btn btn-danger"
                                                 onclick="document.getElementById('pls').click();">Next</button>
                                             <button type="button" id="cancelButton" class="btn btn-danger"
-                                                onclick="window.location.href='index.html'">Cancel</button>
+                                                onclick="window.location.href='/'">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
@@ -451,12 +435,6 @@
 
                                                 <div class="col-sm-3"><input type="checkbox" name="donorType"
                                                         value="Replacement External">&nbsp;Replacement External</div>
-                                                <!-- <div class='col-sm-12'><input type='checkbox' name='donorType'/>&nbsp;Replacement</div>
-        <div class='col-sm-12'><input type='checkbox' name='donorType'/>&nbsp;Family Donor</div>
-        <div class='col-sm-12'><input type='checkbox' name='donorType'/>&nbsp;Directed</div>
-        <div class='col-sm-12'><input type='checkbox' name='donorType' '/>&nbsp;Autologus</div> -->
-
-                                                <!-- <div class='col-sm-12'><b>Any other please mention:</b> <textarea name='donorTypeOther' rows="4" cols="30"></textarea></div> -->
 
 
                                             </section>
@@ -657,11 +635,11 @@
                             <div class="row">
                                 <div class="col-sm-12" align="center">
                                     <!-- <button type="button" id="submitButton" class="btn btn-danger" onclick="document.getElementById('plt').click();">Next</button> -->
-                                    <button type="button" class="btn btn-danger" onclick="finalSubmit()">Save</button>
+                                    <button type="submit" class="btn btn-danger">Save</button>
                                     <button type="button" id="submitButton" class="btn btn-danger"
                                         onclick="document.getElementById('wb').click();">Back</button>
                                     <button type="button" id="cancelButton" class="btn btn-danger"
-                                        onclick="window.location.href='index.html'">Cancel</button>
+                                        onclick="window.location.href='/'">Cancel</button>
                                 </div>
                             </div>
 
@@ -672,794 +650,7 @@
         </div>
 
 
-        <!-- donation Info -->
-        <div class="tabInfo" id="miscel" style="display: none;">
-            <div class="row">
-                <div class="panel-body">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-
-
-                            <fieldset>
-                                <legend>Charge/Tarrif Details</legend>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table id="chargeTarrif">
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="2"><b>Charge/Tarrif Details</b></td>
-
-                                                </tr>
-                                                <tr>
-                                                    <th>Tarrif Name</th>
-                                                    <th>Charges In Rs</th>
-                                                    <th></th>
-                                                </tr>
-                                                <tr>
-                                                    <td class="padding5"><input type="text" name="chargeName"></td>
-                                                    <td class="padding5"><input type="text" name="chargeRs"></td>
-                                                    <td>
-                                                        <button onclick="increaseChargeTable()" type="button"
-                                                            class="btn btn-default">Add More</button>&nbsp;
-
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-
-                            <fieldset>
-                                <legend>Area Details<font color="red">*</font>
-                                </legend>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table id="areaType">
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="2"><b>Area Details</b>
-                                                        <font color="red">*</font>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <th>Area Name</th>
-                                                    <th>Area Usability</th>
-                                                    <th>Room no</th>
-                                                    <th></th>
-                                                </tr>
-                                                <tr>
-                                                    <td class="padding5"><input type="text" name="areaNameDetails"></td>
-                                                    <td class="padding5"><input type="text" name="areaUsability"></td>
-                                                    <td class="padding5"><input type="text" name="roomNo"></td>
-                                                    <td>
-                                                        <button onclick="increaseAreaTable()" type="button"
-                                                            class="btn btn-default">Add More</button>&nbsp;
-
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <fieldset>
-                                <legend>Storage Details<font color="red">*</font>
-                                </legend>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table id="storageType">
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="2"><b>Storage Details</b>
-                                                        <font color="red">*</font>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <th>Storage name</th>
-                                                    <th>Storage type</th>
-                                                    <th>Area Name</th>
-                                                    <th></th>
-                                                </tr>
-                                                <tr>
-                                                    <td class="padding5"><input type="text" name="storageName"></td>
-                                                    <td class="padding5"><input type="text" name="storageType"></td>
-                                                    <td class="padding5"><input type="text" name="areaName"></td>
-                                                    <td>
-                                                        <button onclick="increaseStorageTable()" type="button"
-                                                            class="btn btn-default">Add More</button>&nbsp;
-
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                </div>
-                            </fieldset>
-
-                            <fieldset>
-                                <legend>Refreshment Details<font color="red">*</font>
-                                </legend>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table id="refreshmentType">
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="2"><b>Refreshment Details</b>
-                                                        <font color="red">*</font>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <th>Refreshment name</th>
-                                                    <th>Refreshment quantity</th>
-
-                                                    <th></th>
-                                                </tr>
-                                                <tr>
-                                                    <td class="padding5"><input type="text" name="refreshmentItem"></td>
-                                                    <td class="padding5"><input type="text" name="refreshmentQuantity">
-                                                    </td>
-
-                                                    <td>
-                                                        <button onclick="increaseRefreshment()" type="button"
-                                                            class="btn btn-default">Add More</button>&nbsp;
-
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                </div>
-                            </fieldset>
-
-                            <div class="row">
-                                <div class="col-sm-12" align="center">
-                                    <!-- <button type='button' class="btn btn-danger" onclick="finalSubmit()">Save</button> -->
-                                    <button type="button" id="submitButton" class="btn btn-danger"
-                                        onclick="document.getElementById('user1').click();">Next</button>
-
-                                    <button type="button" id="submitButton" class="btn btn-danger"
-                                        onclick="document.getElementById('pls').click();">Back</button>
-                                    <button type="button" id="cancelButton" class="btn btn-danger"
-                                        onclick="window.location.href='index.html'">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="tabInfo" id="user" style="display: none;">
-
-            <div class="row">
-                <div class="panel-body">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="pricing-table">
-                                <div class="row">
-
-                                    <div class="col-sm-6">
-                                        <div class="single-table wow flipInY animated" data-wow-duration="1000ms"
-                                            data-wow-delay="50ms"
-                                            style="visibility: visible; animation-duration: 1000ms; animation-delay: 50ms; animation-name: flipInY;">
-                                            <h3>Single User</h3>
-                                            <div class="price">
-                                                <div class="service-icon hvr-bounce-to-top svcStock">
-                                                    <i class="fa fa-user "></i>
-                                                </div>
-                                            </div>
-                                            <ul>
-                                                <li>All the authority given to single user</li>
-                                                <li>Recomended, If you have single pc working in blood bank</li>
-
-
-                                            </ul>
-                                            <input type="radio" name="userType" value="Single"><b>Single User</b>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <div class="single-table wow flipInY animated" data-wow-duration="1000ms"
-                                            data-wow-delay="50ms"
-                                            style="visibility: visible; animation-duration: 1000ms; animation-delay: 50ms; animation-name: flipInY;">
-                                            <h3>Multi User</h3>
-                                            <div class="price">
-                                                <div class="service-icon hvr-bounce-to-top svcCamp">
-                                                    <i class="fa fa-users"></i>
-                                                </div>
-                                            </div>
-                                            <ul>
-                                                <li>For Admin,Lab Technician</li>
-                                                <li>Divide responsibility b/w users </li>
-                                                <li>Recomended, when everyone have different responsibility</li>
-                                            </ul>
-                                            <input type="radio" name="userType" value="Multiple"><b>Multi User</b>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12" align="center">
-
-                                    <button type="button" class="btn btn-danger" onclick="finalSubmit()">Save</button>
-                                    <button type="button" id="submitButton" class="btn btn-danger"
-                                        onclick="document.getElementById('miscel').click();">Back</button>
-                                    <button type="button" id="cancelButton" class="btn btn-danger"
-                                        onclick="window.location.href='index.html'">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        </div>
-        <!-- Do not modify this include list -->
-        <script src="bootstrap.min.js"></script>
-        <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
-
-        <script src="wow.js"></script>
-        <script src="script.js"></script>
-        <!--       <script type="text/javascript" src="../hisglobal/bbpublic/assets/elements/js/captcha.js"></script> -->
-        <script src="custom.js"></script>
-
-        <script type="text/javascript">
-
-
-            var transformZoom = 1;
-            var cssZoom = 100;
-
-
-
-            $('.make_greater').click(function () {
-
-            }
-            );
-
-
-
-
-            $('.make_smaller').click(function () {
-                var step;
-                if (Modernizr.testProp('zoom') === true) {
-                    console.log('CSS zoom supported');
-
-                    step = 5;
-                    cssZoom -= step;
-                    $('body').css('zoom', ' ' + cssZoom + '%');
-                } else {
-                    console.log('no css zoom');
-                    step = 0.05;
-                    transformZoom -= step;
-                    $('html').css('MozTransform', 'scale(' + transformZoom + ',' + transformZoom + ')');
-                    console.log('no css zoom 1');
-                    $('html').css('transform-origin', 'top center');
-                    console.log('no css zoom 2');
-                }
-            });
-
-
-            $('#reset').click(function () {
-                cssZoom = 100;
-                if (Modernizr.testProp('zoom') === true) {
-                    $('body').css('zoom', ' ' + 100 + '%');
-                }
-                else {
-                    console.log('no css zoom');
-                    transformZoom = 1;
-                    $('html').css('MozTransform', 'scale(' + 1 + ',' + 1 + ')');
-                    $('html').css('transform-origin', 'top center');
-                }
-                console.log('cssZoom');
-            });
-
-            $("#dark").click(function () {
-
-                $("section").toggleClass("darkbg1");
-                $("header").toggleClass("darkbg1");
-                $("ul").toggleClass("darkbg1");
-                $("li").toggleClass("darkbg1");
-                $("a").toggleClass("darkbg2");
-                $("hr").toggleClass("darkbg2");
-                $("td").toggleClass("darkbg3");
-
-                $(".toggle1").toggleClass("darkbg1");
-                $(".toggle2").toggleClass("darkbg2");
-                $("body").toggleClass("darkbg1");
-
-
-
-            });
-
-
-
-            $(function () {
-                $('a[href^="http"]').each(function () {
-                    $(this).on('click', function () { return external_link() });
-                });
-
-
-            });
-
-            function external_link() {
-                return 1 == confirm('You are about to leave www.RedLife.in.\nThis is a link to external website/content. This site does not belong to RedLife and hence RedLife shall not be liable in any case.\nPlease Continue at your own risk.') ? !0 : !1
-            }
-            $.urlParam = function (name) {
-                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-                if (results == null) {
-                    return null;
-                }
-                else {
-                    return results[1] || 0;
-                }
-            }
-        </script>
-        <script>
-                (function (i, s, o, g, r, a, m) {
-                    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                        (i[r].q = i[r].q || []).push(arguments)
-                    }, i[r].l = 1 * new Date(); a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-            ga('create', 'UA-73827792-1', 'auto');
-            ga('send', 'pageview');
-        </script>
-        <input type="hidden" name="hmode">
-        <input type="hidden" name="state">
-        <input type="hidden" name="district">
-    </form>
-    <div class="pac-container pac-logo hdpi"
-        style="display: none; width: 298px; position: absolute; left: 509px; top: 1189px;"></div>
-
-    <script>
-
-        function increaseStorageTable() {
-            var html = "<tr><td class='padding5'><input type='text' name='storageName'/></td><td class='padding5'><input type='text' name='storageType'/></td><td class='padding5'><input type='text' name='areaName'/></td><td><button onclick='delelteTr(this)' type='button'>-</button></td></tr>";
-            $('#storageType tr:last').after(html);
-
-        }
-        function increaseAreaTable() {
-            var html = "<tr><td class='padding5'><input type='text' name='areaName'/></td><td class='padding5'><input type='text' name='areaUsability'/></td><td class='padding5'><input type='text' name='roomNo'/></td><td><button onclick='delelteTr(this)' type='button'>-</button></td></tr>";
-            $('#areaType tr:last').after(html);
-        }
-        function increaseChargeTable() {
-            var html = "<tr><td class='padding5'><input type='text' name='chargeName'/></td><td class='padding5'><input type='text' name='chargeRs'/></td><td><button onclick='delelteTr(this)' type='button'>-</button></td></tr>";
-            $('#chargeTarrif tr:last').after(html);
-        }
-        function increaseRefreshment() {
-            var html = "<tr><td class='padding5'><input type='text' name='refreshmentItem'/></td><td class='padding5'><input type='text' name='refreshmentQuantity'/></td><td><button onclick='delelteTr(this)' type='button'>-</button></td></tr>";
-            $('#refreshmentType tr:last').after(html);
-        }
-        function delelteTr(obj) {
-            $(obj).closest('tr').remove();
-        }
-
-        function onblurTimeHourCheck(_hObj) {
-            var hh = /^0/.test(_hObj.value) ? _hObj.value.substr(1, 1) : _hObj.value;
-            if (hh == "" || hh >= 24) hh = 0;
-            hh = parseInt(hh);
-            // Setting Hour
-            if (hh < 10) _hObj.value = "0" + hh;
-            else _hObj.value = hh;
-        }
-
-
-        function onkeyTimeMin(_mObj, _hObj, _e) // 24-Hour Format
-        {
-            var c = _e.charCode;
-            var k = _e.keyCode;
-
-            var hh = /^0/.test(_hObj.value) ? _hObj.value.substr(1, 1) : _hObj.value;
-            if (hh == "" || hh >= 24) hh = 0;
-            hh = parseInt(hh);
-
-            var mm = /^0/.test(_mObj.value) ? _mObj.value.substr(1, 1) : _mObj.value;
-            if (mm == "" || mm >= 60) mm = 0;
-            mm = parseInt(mm);
-
-
-            // Only integer check
-            if (k == 0 && c >= 48 && c <= 57) return true;
-
-            if (k == 40 || k == 38)	// on Arrow press Down-40 Up-38
-            {
-                if (k == 40) {
-                    if (mm == 59) hh = (hh + 1) % 24;
-                    mm = (mm + 1) % 60;
-                }
-                else if (k == 38) {
-                    if (mm == 0) hh = (24 + hh - 1) % 24;
-                    mm = (60 + mm - 1) % 60;
-                }
-
-                // Setting Hour
-                if (hh < 10) _hObj.value = "0" + hh;
-                else _hObj.value = hh;
-
-                // Setting Minutes
-                if (mm < 10) _mObj.value = "0" + mm;
-                else _mObj.value = mm;
-            }
-            if (k != 0) return true;
-            else return false;
-        }
-
-        function onblurTimeMinCheck(_mObj) {
-            var mm = /^0/.test(_mObj.value) ? _mObj.value.substr(1, 1) : _mObj.value;
-            if (mm == "" || mm >= 60) mm = 0;
-            mm = parseInt(mm);
-            // Setting Minutes
-            if (mm < 10) _mObj.value = "0" + mm;
-            else _mObj.value = mm;
-        }
-
-        function onkeyTimeHour(_hObj, _e) // 24-Hour Format
-        {
-            var c = _e.charCode;
-            var k = _e.keyCode;
-
-            var hh = /^0/.test(_hObj.value) ? _hObj.value.substr(1, 1) : _hObj.value;
-            if (hh == "" || hh >= 24) hh = 0;
-            hh = parseInt(hh);
-
-
-            // Only integer check
-            if (k == 0 && c >= 48 && c <= 57) return true;
-
-            if (k == 40 || k == 38) // on Arrow press Down-40 Up-38
-            {
-                if (k == 40) hh = (hh + 1) % 24;
-                else if (k == 38) hh = (24 + hh - 1) % 24;
-
-                // Setting Hour
-                if (hh < 10) _hObj.value = "0" + hh;
-                else _hObj.value = hh;
-            }
-            if (k != 0) return true;
-            else return false;
-        }
-
-
-        function loadDistrictList(stateCode) {
-            document.getElementsByName("state")[0].value = $("#stateCode option[value='" + stateCode + "']").text();
-            $.getJSON("/BLDAHIMS/bloodbank/portalNearBy.cnt?hmode=GETDISTRICTLIST", {
-                selectedStateCode: stateCode
-            }, function (data) {
-                $("#distList option").not(':first').remove(); // Remove all <option> child tags.
-                console.log(data);
-                $.each(data.records, function (index, item) { // Iterates through a collection
-                    $("#distList").append( // Append an object to the inside of the select box
-                        $("<option></option>").text(item.id).val(item.id));
-                });
-
-                var districtCode = document.getElementsByName('districtId')[0].value;
-                document.getElementById('distList').value = districtCode;
-
-            });
-        }
-        function setSelectedDistrict(obj) {
-            document.getElementsByName("district")[0].value = $("#distList option[value='" + obj.value + "']").text();
-
-        }
-
-        function setDistrictCode(districtCode) {
-            $('#dCode').val(districtCode);
-            //alert($('#dCode').val());
-        }
-
-        function validateForm() {
-            document.getElementsByName('districtId')[0].value = document.getElementById("districtList").value;
-            if (confirm("Do you want to save?") == true) {
-
-            }
-            else {
-                return false;
-            }
-            document.forms[0].hmode.value = "SAVEHOSP";
-            document.forms[0].submit()
-        }
-
-        function cancelPage() {
-            document.forms[0].hmode.value = "CANCEL";
-            document.forms[0].submit();
-        }
-
-        function modifySave() {
-            document.getElementsByName('districtId')[0].value = document.getElementById("distList").value;
-            if (confirm("Do you want to modify?") == true) {
-
-            }
-            else {
-                return false;
-            }
-            document.forms[0].hmode.value = "MODIFYSAVE";
-            document.forms[0].submit();
-        }
-
-        function clearFunc() {
-            document.getElementsByName('bldbankName')[0].value = "";
-            document.getElementsByName('hospContact')[0].value = "";
-            document.getElementsByName('hospEmail')[0].value = "";
-            document.getElementsByName('hospAdd1')[0].value = "";
-            document.getElementsByName('hospAdd2')[0].value = "";
-            document.getElementsByName('hospCity')[0].value = "";
-            document.getElementsByName('stateCode')[0].value = "-1";
-            document.getElementsByName('hospLatitude')[0].value = "";
-            document.getElementsByName('hospLongitude')[0].value = "";
-            document.getElementsByName('parentHospName')[0].value = "";
-            document.getElementsByName('hospShortName')[0].value = "";
-            document.getElementById("distList").value = "-1";
-            document.getElementsByName('hospType')[0].value = "-1";
-            document.getElementsByName('contactPerson')[0].value = "";
-            document.getElementsByName('hospFax')[0].value = "";
-            document.getElementsByName('hospWebsite')[0].value = "";
-            document.getElementsByName('campEntryMode')[0].value = "-1";
-            document.getElementsByName('stockEntryMode')[0].value = "-1";
-            document.getElementsByName('eraktkoshenabled')[0].value = "-1";
-            document.getElementsByName('address')[0].value = "";
-            document.getElementsByName('pincode')[0].value = "";
-            document.getElementsByName('licenceNo')[0].value = "";
-            document.getElementsByName('licenceFromDate')[0].value = "";
-            document.getElementsByName('licenceToDate')[0].value = "";
-        }
-
-        function finalSubmit() {
-            if (!ValidateEmail1()) {
-                return false;
-            }
-            var valid = ""
-            if (!validateLicenseDate()) {
-                valid = false;
-                return valid;
-            }
-            if (document.getElementsByName('stateCode')[0].value == "-1") {
-                alert("Select State");
-                document.getElementsByName("stateCode")[0].focus();
-                document.getElementById('wb').click();
-                return false;
-            }
-
-            if (document.getElementsByName('districtList')[0].value == "-1") {
-                alert("Select District");
-                document.getElementsByName("districtList")[0].focus();
-                document.getElementById('wb').click();
-                return false;
-            }
-
-            if (document.getElementsByName('bldbankName') && document.getElementsByName('bldbankName')[0].value == "") {
-                alert("Enter Bloodbank Name");
-                document.getElementsByName("bldbankName")[0].focus();
-                document.getElementById('wb').click();
-                return false;
-            }
-
-            if (document.getElementsByName('hospType') && document.getElementsByName('hospType')[0].value == "-1") {
-                alert("Select Category");
-                document.getElementsByName("hospType")[0].focus();
-                document.getElementById('wb').click();
-                return false;
-            }
-            if (document.getElementsByName('contactPerson') && document.getElementsByName('contactPerson')[0].value == "") {
-                alert("Enter Contact Person");
-                document.getElementsByName("contactPerson")[0].focus();
-                document.getElementById('wb').click();
-                return false;
-            }
-
-            if (document.getElementsByName('hospContact') && document.getElementsByName('hospContact')[0].value == "") {
-                alert("Enter Contact Number");
-                document.getElementsByName("hospContact")[0].focus();
-                document.getElementById('wb').click();
-                return false;
-            }
-
-
-            if (document.getElementsByName('hospAdd1') && document.getElementsByName('hospAdd1')[0].value == "") {
-                alert("Enter Address1");
-                document.getElementsByName("hospAdd1")[0].focus();
-                document.getElementById('wb').click();
-                return false;
-            }
-
-
-            if (document.getElementsByName('pincode') && document.getElementsByName('pincode')[0].value == "") {
-                alert("Enter Pincode");
-                document.getElementsByName("pincode")[0].focus();
-                document.getElementById('wb').click();
-                return false;
-            }
-
-            if (document.getElementsByName('donorType')) {
-                var elem = document.getElementsByName('donorType');
-                var flag = false;
-                for (i = 0; i < elem.length; i++) {
-                    if (elem[i].checked) {
-                        flg = true;
-                    }
-                }
-                if (!flg) {
-                    alert("Select donor type");
-                    document.getElementById('pls').click();
-                    return false;
-                }
-
-            }
-            if (document.getElementsByName('donationType')) {
-                var elem = document.getElementsByName('donationType');
-                var flag = false;
-                for (i = 0; i < elem.length; i++) {
-                    if (elem[i].checked) {
-                        flg = true;
-                    }
-                }
-                if (!flg) {
-                    alert("Select donor type");
-                    document.getElementById('pls').click();
-                    return false;
-                }
-
-            }
-            if (document.getElementsByName('bagType')) {
-                var elem = document.getElementsByName('bagType');
-                var flg = false;
-                for (i = 0; i < elem.length; i++) {
-                    if (elem[i].checked) {
-                        flg = true;
-                    }
-                }
-                if (!flg) {
-                    alert("Select bag type");
-                    document.getElementById('pls').click();
-                    return false;
-                }
-
-            }
-            if (document.getElementsByName('componentType')) {
-                var elem = document.getElementsByName('componentType');
-                var flg = false;
-                for (i = 0; i < elem.length; i++) {
-                    if (elem[i].checked) {
-                        flg = true;
-                    }
-                }
-                if (!flg) {
-                    alert("Select component  type");
-                    document.getElementById('pls').click();
-                    return false;
-                }
-
-            }
-            if (document.getElementsByName('ttiType')) {
-                var elem = document.getElementsByName('ttiType');
-                var flg = false;
-                for (i = 0; i < elem.length; i++) {
-                    if (elem[i].checked) {
-                        flg = true;
-                    }
-                }
-                if (!flg) {
-                    alert("Select TTI type");
-                    return false;
-                }
-
-            }
-
-            submitForm('SAVEONBOARDFORMA')
-
-        }
-        function funcOnload() {
-
-            document.getElementById('wb').click();
-
-        }
-        function loadDistrictList(stateCode) {
-            document.getElementsByName("state")[0].value = $("#stateCode option[value='" + stateCode + "']").text();
-            $('#dCode').val("-1");
-            $('#sCode').val(stateCode);
-            $.getJSON("/BLDAHIMS/bloodbank/nearbyBB.cnt?hmode=GETDISTRICTLIST", {
-                selectedStateCode: stateCode
-            }, function (data) {
-                $("#distList option").not(':first').remove(); // Remove all <option> child tags.
-                console.log(data);
-                $.each(data.records, function (index, item) { // Iterates through a collection
-                    $("#distList").append( // Append an object to the inside of the select box
-                        $("<option></option>").text(item.id).val(item.value));
-                });
-            });
-        }
-
-        function ValidateEmail1() {
-            var valid = false;
-            var len = document.getElementsByName("hospEmail").length;
-
-            for (i = 0; i < len; i++) {
-                var email = document.getElementsByName("hospEmail")[i].value;
-                if (validateEmail(email))
-                    valid = true;
-                else {
-                    document.getElementsByName("hospEmail")[i].focus();
-                    return false;
-                }
-            }
-            return valid;
-        }
-        $(function () {
-            $("#datepicker").datepicker({
-                dateFormat: 'dd-M-yy'
-            });
-            $("#datepicker1").datepicker({
-                dateFormat: 'dd-M-yy'
-            });
-        });
-
-        function validateLicenseDate() {
-            valid = "";
-
-            var fromDate = convertStrToDate(document
-                .getElementsByName("licenceFromDate")[0].value, "dd-Mon-yyyy");
-            var toDate = convertStrToDate(document
-                .getElementsByName("licenceToDate")[0].value, "dd-Mon-yyyy");
-
-            if (fromDate > toDate) {
-                alert("License From Date should be less then License To Date");
-                valid = false;
-            }
-
-            else {
-                valid = true;
-            }
-
-            return valid;
-        }
-        function submitForm(hmode) {
-            document.forms[0].hmode.value = hmode;
-            document.forms[0].submit();
-        }
-    </script>
-
-
-
-
-
-    <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
-    </div>
-    <div class="betternet-wrapper"></div>
-</body>
-
-
-
-<script>
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".sidebarBtn");
-    sidebarBtn.onclick = function () {
-        sidebar.classList.toggle("active");
-        if (sidebar.classList.contains("active")) {
-            sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-        } else
-            sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-    }
-</script>
-
+       
 {{>footer}}
 {{>chat}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
