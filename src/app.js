@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000;
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '@Ys2drrizfs',
+    password: '',
     database: 'redlife'
 });
 //path settings for css files and images for hbs files
