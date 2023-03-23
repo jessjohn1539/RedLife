@@ -8,14 +8,16 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 
 
+
 //port settings
 const port = process.env.PORT || 3000;
 
+
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'redlife'
+    user: 'your_username',
+    password: 'your_password',
+    database: 'your_database'
 });
 //path settings for css files and images for hbs files
 const static_path = path.join(__dirname, "../public");
@@ -245,3 +247,4 @@ app.post('/BloodBanklogin', (req, res) => {
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 })
+
