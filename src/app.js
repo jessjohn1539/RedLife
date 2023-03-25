@@ -1,24 +1,18 @@
 //Requiring all modules
 const express = require("express");
 const path = require("path");
-const mysql = require('mysql');
 const app = express();
 const hbs = require("hbs");
 const cors = require("cors");
 const bodyParser = require('body-parser');
-
-
+const db = require('./db');
 
 //port settings
 const port = process.env.PORT || 3000;
 
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'your_username',
-    password: 'your_password',
-    database: 'your_database'
-});
+db.createDatabase();
+
 //path settings for css files and images for hbs files
 const static_path = path.join(__dirname, "../public");
 const templates_path = path.join(__dirname, "../templates/views");
@@ -53,7 +47,7 @@ app.get("/bloodbankReg", (req, res) => {
 });
 app.get('/inventory', (req, res) => {
     const sql = 'SELECT * FROM inventory';
-    connection.query(sql, (err, results) => {
+    db.query(sql, (err, results) => {
         if (err) throw err;
         res.render('inventory', { inventory: results });
     });
@@ -61,11 +55,11 @@ app.get('/inventory', (req, res) => {
 app.post('/add-inventory', (req, res) => {
     const { bloodType, quantity, expirationDate } = req.body;
     const sqlLastUsername = 'SELECT userName FROM BBpass ORDER BY userName DESC LIMIT 1';
-    connection.query(sqlLastUsername, (err, results) => {
+    db.query(sqlLastUsername, (err, results) => {
         if (err) throw err;
         const bloodBankUsername = results[0].userName;
         const sqlInsertInventory = 'INSERT INTO inventory (bloodType, quantity, expirationDate, bloodBankId) SELECT ?, ?, ?, userName FROM blood_bank_info WHERE username = ?';
-        connection.query(sqlInsertInventory, [bloodType, quantity, expirationDate, bloodBankUsername], (err, results) => {
+        db.query(sqlInsertInventory, [bloodType, quantity, expirationDate, bloodBankUsername], (err, results) => {
             if (err) throw err;
             res.redirect('/inventory');
         });
@@ -75,7 +69,7 @@ app.post('/add-inventory', (req, res) => {
 app.get("/bloodAvailability", (req, res) => {
     // res.render("BloodAvailability")
     const sql = `SELECT stateCode, hospCity, BBName, hospType, hospContact, hospAdd1, pincode FROM blood_bank_info`;
-    connection.query(sql, (err, result) => {
+    db.query(sql, (err, result) => {
         if (err) throw err;
         const dataList = result.map((row) => ({
             stateCode: row.stateCode,
@@ -98,12 +92,12 @@ app.get("/BBlogin", (req, res) => {
 });
 
 
-connection.connect(function (err) {
+db.connect(function (err) {
     if (err) {
         console.error('Error connecting to SQL database: ' + err.stack);
         return;
     }
-    console.log('Connected to SQL database as ID ' + connection.threadId);
+    console.log('Connected to SQL database as ID ' + db.threadId);
 });
 app.post('/DonorRegistration', function (req, res) {
     const donorFname = req.body.donorFname;
@@ -120,10 +114,9 @@ app.post('/DonorRegistration', function (req, res) {
     const sql = 'INSERT INTO donor (donorFname, donorGender, donorDob,donorMobile,bloodgroup,donorAddress, stateCode,donorPass,Pincode,districtcode) VALUES (?,?,?,?,?,?,?,?,?,?)';
     const values = [donorFname, donorGender, donorDob, donorMobile, bloodgroup, donorAddress, stateCode, donorPass, Pincode, districtcode];
 
-    connection.query(sql, values, function (err, result) {
+    db.query(sql, values, function (err, result) {
         if (err) throw err;
         console.log('1 record inserted');
-        alert('donor successfully registered');
         res.redirect('/');
         console.log(result);
     });
@@ -134,12 +127,12 @@ app.post('/login', (req, res) => {
     const sql = 'INSERT INTO donorPass (mobileNumber, password) VALUES (?,?)';
     const values = [mobileNumber, password];
 
-    connection.query(sql, values, function (err, result) {
+    db.query(sql, values, function (err, result) {
         if (err) throw err;
-        console.log('1 record inserted');
+        console.log('Donor registered successfully!');
     });
     const query1 = `SELECT * FROM donor WHERE donorPass = ?`;
-    connection.query(query1, [password], (error, results, fields) => {
+    db.query(query1, [password], (error, results, fields) => {
         if (error) throw error;
 
         if (results.length > 0) {
@@ -199,17 +192,17 @@ app.post('/bloodbankRegis', function (req, res) {
     const values1 = [stateCode, districtcode, hospCity, BBName, parentHospName, hospShortName, hospType, contactPerson, hospEmail, hospContact, hospFax, licenceNo, licenceFromDate, licenceToDate, componentFacility, apheresisFacility, helplineNo, hospAdd1, hospAdd2, pincode, hospWebsite, noOfBed, userName, password];
 
 
-    connection.query(sql1, values1, (err, result) => {
+    db.query(sql1, values1, (err, result) => {
         if (err) throw err;
 
         // Insert data into table2
         const sql2 = 'INSERT INTO donation_info (donorType, donationType,componentType,bagType,ttiType) VALUES (?,?,?,?,?)';
         const values2 = [donorType, donationType, componentType, bagType, ttiType]
 
-        connection.query(sql2, values2, (err, result) => {
+        db.query(sql2, values2, (err, result) => {
             if (err) throw err;
 
-            console.log('Data inserted successfully!');
+            console.log('Blood bank registered successfully!');
             res.redirect('/');
         });
     });
@@ -221,12 +214,12 @@ app.post('/BloodBanklogin', (req, res) => {
     const sql = 'INSERT INTO BBPass (userName, password) VALUES (?,?)';
     const values = [userName, password];
 
-    connection.query(sql, values, function (err, result) {
+    db.query(sql, values, function (err, result) {
         if (err) throw err;
         console.log('1 record inserted');
     });
     const query1 = `SELECT * FROM blood_bank_info WHERE password = ?`;
-    connection.query(query1, [password], (error, results, fields) => {
+    db.query(query1, [password], (error, results, fields) => {
         if (error) throw error;
 
         if (results.length > 0) {
