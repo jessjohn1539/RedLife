@@ -2,8 +2,8 @@ const mysql = require('mysql');
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'username',
-    password: 'password',
+    user: 'Your_username',
+    password: 'your_password',
 });
 
 const createDatabase = () => {
@@ -47,7 +47,7 @@ const createDatabase = () => {
         hospShortName varchar(30)  not null,
         hospType varchar(20)  not null,
         contactPerson varchar(30)  not null,
-        hospEmail varchar(20)  not null,
+        hospEmail varchar(30)  not null,
         hospContact varchar(20)  not null,
         hospFax varchar(20) ,
         licenceNo varchar(30)  not null,
@@ -99,8 +99,7 @@ const createDatabase = () => {
             bloodBankId varchar(20) not null,
             bloodType varchar(20) not null,
             quantity varchar(20) not null,
-            expirationDate varchar(20) not null,
-            primary key (bloodBankId)
+            expirationDate varchar(20) not null
           );`, (err, result) => {
                 if (err) throw err;
                 console.log('inventory table created successfully!');

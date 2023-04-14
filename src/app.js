@@ -1,34 +1,16 @@
 //Requiring all modules
 const express = require("express");
 const path = require("path");
-// const mysql = require('mysql');//comment this line after db.js setup
 const app = express();
 const hbs = require("hbs");
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const db = require('./db');
 
-// after adding required tables in db.js activate below code
-// const db = require('./db');
-
-// db.connection.connect((err) => {
-//   if (err) throw err;
-//   console.log('Connected to database!');
-
-//   db.createTables();
-// });
 
 //port settings
-
 const port = process.env.PORT || 3000;
 
-//comment this line after db.js setup
-// const connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: '@Ys2drrizfs',
-//     database: 'redlife'
-// });
 db.createDatabase();
 
 //path settings for css files and images for hbs files
@@ -158,8 +140,6 @@ app.post('/login', (req, res) => {
             if (donor.donorPass === password && donor.donorMobile === mobileNumber) {
                 // Password is correct, user can login
                 res.redirect(`/?username=${donor.donorFname}`);
-                // res.redirect('/?donorFname=' + donor.donorFname);
-                // res.render('index', {username: donor.donorFname});
             } else {
                 // Password is incorrect
                 res.status(401).send('Incorrect password');
